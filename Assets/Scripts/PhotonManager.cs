@@ -82,7 +82,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             room.GetComponent<RoomInfo>().name = roomList[i].Name;
             room.GetComponent<RoomInfo>().Roomname.text = roomList[i].Name;
             room.GetComponent<RoomInfo>().PlayerCnt.text = roomList[i].PlayerCount.ToString()+" / "+roomList[i].MaxPlayers;
-            if (roomList[i].PlayerCount >= roomList[i].MaxPlayers)
+            if (roomList[i].PlayerCount >= roomList[i].MaxPlayers || roomList[i].IsOpen==false)
             {
                 room.SetActive(false);
             }

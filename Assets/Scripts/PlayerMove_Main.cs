@@ -12,6 +12,7 @@ public class PlayerMove_Main : MonoBehaviourPunCallbacks
     public SpriteRenderer sr;
     public float speed = 2;
     public GameObject _camera;
+    public MainPlayerInfo playerInfo;
     
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,7 @@ public class PlayerMove_Main : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (PV.IsMine)
+        if (PV.IsMine&&MainNetManager.instance.Intro==false&& playerInfo.IsIce==false)
         {
 
         Vector3 dir = Vector3.ClampMagnitude(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f), 1f);

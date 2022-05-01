@@ -27,7 +27,7 @@ MonoBehaviour:
     EnableProtocolFallback: 1
     AuthMode: 0
     EnableLobbyStatistics: 0
-    NetworkLogging: 1
+    NetworkLogging: 0
   DevRegion: kr
   PunLogging: 0
   EnableSupportLogger: 0
@@ -43,6 +43,13 @@ MonoBehaviour:
   - NickSet
   - FlipSet
   - GamePlayer
+  - CreatePlayer
+  - _Killon
+  - KillOn
+  - PosGo
+  - IceGo
+  - IceBye
+  - GameOverFunc
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

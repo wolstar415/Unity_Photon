@@ -2,15 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 8
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_MapShadow
-  m_Shader: {fileID: -6465566751694194690, guid: 9462dfb3f7ff09a4d9513f0891692062, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_Shader: {fileID: -6465566751694194690, guid: 9462dfb3f7ff09a4d9513f0891692062,
+    type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -21,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AllSeeTexture:
-        m_Texture: {fileID: 8400000, guid: d4c543379dd3c6d4fa2f368273d643c6, type: 2}
+        m_Texture: {fileID: 8400000, guid: 35f5835c08d7470458b36625daebda55, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaTex:
@@ -29,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LightMapTexture:
-        m_Texture: {fileID: 8400000, guid: e54d8d4d4e0915547a21df60ee3f8732, type: 2}
+        m_Texture: {fileID: 8400000, guid: 312dfdf26c030e4478574ea7ce7ed4a0, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -45,26 +45,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowTexture:
-        m_Texture: {fileID: 8400000, guid: ea5aab62ffcb904408b3df5a2401e84b, type: 2}
+        m_Texture: {fileID: 8400000, guid: 3cd11b5f509d5a44baca373b5c9f84ad, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []

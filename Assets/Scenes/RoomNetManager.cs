@@ -38,7 +38,8 @@ public class RoomNetManager : MonoBehaviourPunCallbacks
             StartOb.SetActive(true);
 
         }
-
+        //PhotonNetwork.IsMessageQueueRunning = false;
+        //SceneManager.LoadScene("03_Main");
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -98,6 +99,9 @@ public class RoomNetManager : MonoBehaviourPunCallbacks
         }
         ChatInput.Select();
         pv.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text, PhotonNetwork.NickName);
+
+
+
         ChatInput.text = "";
     }
 
