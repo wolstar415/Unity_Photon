@@ -351,6 +351,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 6313292433380528283}
   - {fileID: 1091265646704553123}
+  - {fileID: -7652857692600858910}
   - {fileID: 938914173218711769}
   sceneViewId: 0
   InstantiationId: 0
@@ -426,6 +427,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Nick: {fileID: 4909885196022476639}
   PV: {fileID: 3349518192713106573}
+  ColorNum: 0
+  CheckColor: 
+  spriteRenderer: {fileID: 8872708415114705574}
 --- !u!50 &7528297216554686862
 Rigidbody2D:
   serializedVersion: 4

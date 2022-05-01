@@ -19,6 +19,7 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
     public Button iceBtn;
     public Button useBtn;
     public GameObject IceOb;
+    public SpriteRenderer spriteRenderer;
     void Awake()
     {
             MainNetManager.instance.PlayerOb.Add(gameObject);
@@ -29,6 +30,7 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
             KillBtn = MainNetManager.instance.KillBtn;
             iceBtn = MainNetManager.instance.iceBtn;
             useBtn = MainNetManager.instance.useBtn;
+            //PV.RPC("setcolor", RpcTarget.All, ColorSystem.instance.color);
         }
         else
         {
@@ -36,7 +38,9 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
             Nick.text = PV.Owner.NickName;
         }
         
+            spriteRenderer.material.SetColor("_PlayerColor", ColorSystem.instance.colors[PV.Owner.ActorNumber-1]);
     }
+
 
     public void Killer_Colli()
     {
@@ -144,6 +148,11 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
             }
         }
     }
+    private void OnDestroy()
+    {
+        MainNetManager.instance.PlayerOb.Remove(gameObject);
+    }
+
 
     [PunRPC]
     void KillOn()
@@ -172,9 +181,6 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
         this.IsIce = false;
         iceBtn.interactable = true;
     }
-    private void OnDestroy()
-    {
-        MainNetManager.instance.PlayerOb.Remove(gameObject);
-    }
+
 
 }

@@ -36,9 +36,11 @@ public class RoomNetManager : MonoBehaviourPunCallbacks
     void Start()
     {
         PhotonNetwork.IsMessageQueueRunning = true;
+        PhotonNetwork.CurrentRoom.IsOpen = true;
         int ran = Random.Range(0, CreatePos.Length);
         //GameObject Player = PhotonNetwork.Instantiate("LobyCharacter", CreatePos[ran].position, Quaternion.identity);
         GameObject Player = PhotonNetwork.Instantiate("LobyCharacter", CreatePos[ran].position, Quaternion.identity,0);
+        //Player.GetComponent<LobyPlayerInfo>().ColorSet();
         //Player.GetComponent<LobyPlayerInfo>().Nick.text = PhotonNetwork.LocalPlayer.NickName;
         playerCnt.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString() + " / " + PhotonNetwork.CurrentRoom.MaxPlayers.ToString();
         playerob = Player;
@@ -59,6 +61,7 @@ public class RoomNetManager : MonoBehaviourPunCallbacks
         //PhotonNetwork.IsMessageQueueRunning = false;
         //SceneManager.LoadScene("03_Main");
     }
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         if (PhotonNetwork.CurrentRoom.PlayerCount>=2)
@@ -153,5 +156,15 @@ public class RoomNetManager : MonoBehaviourPunCallbacks
         PhotonNetwork.IsMessageQueueRunning = false;
         SceneManager.LoadScene("03_Main");
     }
+
+    //[PunRPC]
+    //void AllColorSet()
+    //{
+    //    for (int i = 0; i < Playerobs.Count; i++)
+    //    {
+    //        int num = Playerobs[i].GetComponent<LobyPlayerInfo>().ColorNum;
+    //        Playerobs[i].GetComponent<LobyPlayerInfo>().spriteRenderer.material.SetColor("_PlayerColor", ColorSystem.instance.colors[num]);
+    //    }
+    //}
     #endregion
 }

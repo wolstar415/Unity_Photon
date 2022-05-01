@@ -7,6 +7,10 @@ public class RangeSystem : MonoBehaviour
     public MainPlayerInfo playerInfo;
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!playerInfo.PV.IsMine)
+        {
+            return;
+        }
         if (MainNetManager.instance.Intro)
             return;
         if (!other.CompareTag("Player"))
@@ -32,6 +36,10 @@ public class RangeSystem : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        if (!playerInfo.PV.IsMine)
+        {
+            return;
+        }
         if (MainNetManager.instance.Intro)
             return;
         if (!other.CompareTag("Player"))

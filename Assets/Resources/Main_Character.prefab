@@ -484,6 +484,7 @@ MonoBehaviour:
   iceBtn: {fileID: 0}
   useBtn: {fileID: 0}
   IceOb: {fileID: 651303255}
+  spriteRenderer: {fileID: 4004472381198194040}
 --- !u!1 &4655496595495679036
 GameObject:
   m_ObjectHideFlags: 0
