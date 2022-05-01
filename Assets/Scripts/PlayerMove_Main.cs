@@ -13,7 +13,8 @@ public class PlayerMove_Main : MonoBehaviourPunCallbacks
     public float speed = 2;
     public GameObject _camera;
     public MainPlayerInfo playerInfo;
-    
+    public Rigidbody2D rd;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +24,14 @@ public class PlayerMove_Main : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (PV.IsMine&&MainNetManager.instance.Intro==false&& playerInfo.IsIce==false)
+        rd.velocity = Vector3.zero;
+        if (PV.IsMine&&MainNetManager.instance.Intro==false)
         {
-
+            if (playerInfo.IsIce)
+            {
+                ani.SetBool("isMove", false);
+                return;
+            }
         Vector3 dir = Vector3.ClampMagnitude(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f), 1f);
             if (dir.x < 0f)
             {

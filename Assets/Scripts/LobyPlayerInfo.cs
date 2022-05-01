@@ -12,6 +12,7 @@ public class LobyPlayerInfo : MonoBehaviour
     public PhotonView PV;
      void Awake()
     {
+        RoomNetManager.instance.Playerobs.Add(gameObject);
         if (PV.IsMine)
         {
 

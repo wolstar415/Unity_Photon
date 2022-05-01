@@ -5,7 +5,7 @@ using UnityEngine;
 public class RangeSystem : MonoBehaviour
 {
     public MainPlayerInfo playerInfo;
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (MainNetManager.instance.Intro)
             return;
@@ -13,6 +13,7 @@ public class RangeSystem : MonoBehaviour
         {
             return;
         }
+
         if (playerInfo.IsKiller)
         {
 
@@ -28,7 +29,8 @@ public class RangeSystem : MonoBehaviour
         }
         
     }
-    private void OnTriggerExit(Collider other)
+
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (MainNetManager.instance.Intro)
             return;
@@ -37,6 +39,7 @@ public class RangeSystem : MonoBehaviour
             return;
         }
 
+   
         if (playerInfo.IsKiller)
         {
 

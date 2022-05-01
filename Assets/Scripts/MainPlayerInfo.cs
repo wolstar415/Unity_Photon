@@ -85,7 +85,9 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
                     friendly[i].GetComponent<MainPlayerInfo>().Killer_Colli();
                 }
             }
+           
         }
+
     }
 
     public void KillFunc()
@@ -98,6 +100,24 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
                 return;
             }
         }
+    }
+    public void iceCheck()
+    {
+        bool b = true;
+        for (int i = 0; i < MainNetManager.instance.PlayerOb.Count; i++)
+        {
+            if (MainNetManager.instance.PlayerOb[i].GetComponent<MainPlayerInfo>().IsIce==false&& MainNetManager.instance.PlayerOb[i].GetComponent<MainPlayerInfo>().IsKiller==false)
+            {
+                b = false;
+            }
+            
+        }
+
+        if (b)
+        {
+            MainNetManager.instance.GameOver();
+        }
+        
     }
     private void Update()
     {
@@ -142,6 +162,8 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
     {
         this.IceOb.SetActive(true);
         this.IsIce = true;
+        iceCheck();
+
     }
     [PunRPC]
     void IceBye()

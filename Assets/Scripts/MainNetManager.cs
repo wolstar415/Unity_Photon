@@ -25,6 +25,7 @@ public class MainNetManager : MonoBehaviourPunCallbacks,IPunObservable
     public Button KillBtn;
     public Button iceBtn;
     public Button useBtn;
+    public bool IsGameOver = false;
 
     public GameObject GameoverOb;
     private void Awake()
@@ -84,6 +85,10 @@ public class MainNetManager : MonoBehaviourPunCallbacks,IPunObservable
 
     public void GameOver()
     {
+        if (IsGameOver)
+        {
+            return;
+        }
         PV.RPC("GameOverFunc", RpcTarget.All);
     }
 
@@ -104,13 +109,14 @@ public class MainNetManager : MonoBehaviourPunCallbacks,IPunObservable
     void GameOverFunc()
     {
         GameoverOb.SetActive(true);
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
         Invoke("GameOverFunc2", 2f);
+        IsGameOver = true;
     }
 
     void GameOverFunc2()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("01_Loby");
+        SceneManager.LoadScene("02_ReadyRoom");
     }
 }

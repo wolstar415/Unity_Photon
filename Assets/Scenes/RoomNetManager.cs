@@ -20,6 +20,15 @@ public class RoomNetManager : MonoBehaviourPunCallbacks
     public Scrollbar scrollbar;
     public GameObject startOb;
 
+    public List<GameObject> Playerobs;
+
+    public Color[] colors;
+    public static RoomNetManager instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+
     //private void Awake()
     //{
     //    PhotonNetwork.ConnectUsingSettings();
@@ -36,6 +45,15 @@ public class RoomNetManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             StartOb.SetActive(true);
+
+        }
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        {
+            startOb.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            startOb.GetComponent<Button>().interactable = false;
 
         }
         //PhotonNetwork.IsMessageQueueRunning = false;
