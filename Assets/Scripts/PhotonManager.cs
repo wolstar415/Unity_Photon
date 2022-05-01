@@ -198,6 +198,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         //PhotonNetwork.Instantiate("asd", Vector3.zero, Quaternion.identity);
+        LobyManager.instance.Online.SetActive(false);
         PhotonNetwork.IsMessageQueueRunning = false;
         SceneManager.LoadScene("02_ReadyRoom");
         //return;

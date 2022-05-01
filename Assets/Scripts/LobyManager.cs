@@ -24,7 +24,14 @@ public class LobyManager : MonoBehaviour
 
     public static LobyManager instance;
     void Awake() => instance = this;
-
+    private void Start()
+    {
+        Loby1.SetActive(true);
+        Online.SetActive(false);
+        CreateRoom.SetActive(false);
+        SelectRoom.SetActive(false);
+        Loading.SetActive(false);
+    }
     public GameObject RoomPrefab;
     public Transform parent;
     public List<GameObject> RoomList;
