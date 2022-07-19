@@ -7,11 +7,11 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class MainNetManager : MonoBehaviourPunCallbacks,IPunObservable
+public class MainNetManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     public static MainNetManager instance;
     public GameObject IntroOb;
-    public bool Intro=true;
+    public bool Intro = true;
     public Transform PlayerCreatePos;
     public List<GameObject> PlayerOb;
     public int KillerNum = 0;
@@ -28,11 +28,14 @@ public class MainNetManager : MonoBehaviourPunCallbacks,IPunObservable
     public bool IsGameOver = false;
 
     public GameObject GameoverOb;
+
     private void Awake()
     {
         instance = this;
     }
+
     public Transform[] CreatePos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,44 +44,43 @@ public class MainNetManager : MonoBehaviourPunCallbacks,IPunObservable
 
         if (PhotonNetwork.IsMasterClient)
         {
-        KillerNum = Random.Range(0, PhotonNetwork.CurrentRoom.PlayerCount);
+            KillerNum = Random.Range(0, PhotonNetwork.CurrentRoom.PlayerCount);
         }
+
         int ran = Random.Range(0, CreatePos.Length);
-        GameObject Player = PhotonNetwork.Instantiate("Main_Character", CreatePos[ran].position, Quaternion.identity, 0);
+        GameObject Player =
+            PhotonNetwork.Instantiate("Main_Character", CreatePos[ran].position, Quaternion.identity, 0);
         Playerob = Player;
-        Invoke("StartFunc", 1.5f);
+        Invoke(nameof(StartFunc), 1.5f);
     }
 
     public void IceButton()
     {
         Playerob.GetComponent<MainPlayerInfo>().IceFunc();
     }
+
     public void UseButton()
     {
-
         Playerob.GetComponent<MainPlayerInfo>().UseFunc();
     }
+
     public void KillButton()
     {
         Playerob.GetComponent<MainPlayerInfo>().KillFunc();
     }
+
     void StartFunc()
     {
         IntroOb.SetActive(false);
         Intro = false;
-        // int i = PhotonNetwork.
-        //  GameObject Player = PhotonNetwork.Instantiate("Main_Character", PlayerCreatePos.position, Quaternion.identity, 0);
         if (PhotonNetwork.IsMasterClient)
         {
             for (int i = 0; i < PlayerOb.Count; i++)
             {
-
                 if (i == KillerNum)
                 {
-
                     PlayerOb[i].GetComponent<MainPlayerInfo>().PV.RPC("KillOn", RpcTarget.All);
                 }
-
             }
         }
     }
@@ -89,6 +91,7 @@ public class MainNetManager : MonoBehaviourPunCallbacks,IPunObservable
         {
             return;
         }
+
         PV.RPC("GameOverFunc", RpcTarget.All);
     }
 
@@ -100,7 +103,6 @@ public class MainNetManager : MonoBehaviourPunCallbacks,IPunObservable
         }
         else
         {
-
             this.KillerNum = (int)stream.ReceiveNext();
         }
     }

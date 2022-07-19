@@ -13,6 +13,8 @@ public class LobyPlayerInfo : MonoBehaviourPunCallbacks,IPunObservable
     public int ColorNum;
     public List<int> CheckColor;
     public SpriteRenderer spriteRenderer;
+    private static readonly int PlayerColor = Shader.PropertyToID("_PlayerColor");
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -34,23 +36,13 @@ public class LobyPlayerInfo : MonoBehaviourPunCallbacks,IPunObservable
         {
 
             Nick.text = PhotonNetwork.NickName;
-            //int zz = PhotonNetwork.CurrentRoom.PlayerCount - 1;
-            //ColorNum = zz;
-            //ColorSystem.instance.color = ColorSystem.instance.colors[ColorNum];
-            
-            //PV.RPC("setcolor", RpcTarget.All);
         }
         else
         {
 
             Nick.text = PV.Owner.NickName;
         }
-        spriteRenderer.material.SetColor("_PlayerColor", ColorSystem.instance.colors[PV.Owner.ActorNumber-1]);
-        //    Debug.Log(PV.Owner.ActorNumber);
-        //spriteRenderer.material.SetColor("_PlayerColor", ColorSystem.instance.colors[ColorNum]);
-        //Invoke("ColorsetFunc", 0.5f);
-        //ColorSet();
-
+        spriteRenderer.material.SetColor(PlayerColor, ColorSystem.instance.colors[PV.Owner.ActorNumber-1]);
 
     }
     private void OnDestroy()
@@ -59,26 +51,25 @@ public class LobyPlayerInfo : MonoBehaviourPunCallbacks,IPunObservable
     }
     public void ColorsetFunc()
     {
-        spriteRenderer.material.SetColor("_PlayerColor", ColorSystem.instance.colors[ColorNum]);
+        spriteRenderer.material.SetColor(PlayerColor, ColorSystem.instance.colors[ColorNum]);
     }
     public void ColorSet()
     {
         ColorNum = 1000;
-        for (int i = 0; i < ColorSystem.instance.colorIdx.Count; i++)
+        foreach (var t in ColorSystem.instance.colorIdx)
         {
-            CheckColor.Add(ColorSystem.instance.colorIdx[i]);
+            CheckColor.Add(t);
         }
-        for (int i = 0; i < RoomNetManager.instance.Playerobs.Count; i++)
+        foreach (var t in RoomNetManager.instance.Playerobs)
         {
-            int num = RoomNetManager.instance.Playerobs[i].GetComponent<LobyPlayerInfo>().ColorNum;
+            int num = t.GetComponent<LobyPlayerInfo>().ColorNum;
             if (CheckColor.Contains(num))
             {
-            CheckColor.Remove(num);
+                CheckColor.Remove(num);
 
             }
         }
-       ColorNum=CheckColor[0];
-        //Debug.Log(ColorNum);
+        ColorNum=CheckColor[0];
         PV.RPC("setcolor", RpcTarget.AllBuffered, ColorSystem.instance.colors[ColorNum]);
     }
 

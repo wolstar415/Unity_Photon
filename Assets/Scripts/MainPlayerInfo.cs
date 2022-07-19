@@ -10,8 +10,8 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
 {
     public TextMeshProUGUI Nick;
     public PhotonView PV;
-    public bool IsKiller=false;
-    public bool IsIce=false;
+    public bool IsKiller = false;
+    public bool IsIce = false;
     public Transform Pos;
     public List<GameObject> Enemy;
     public List<GameObject> friendly;
@@ -20,12 +20,12 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
     public Button useBtn;
     public GameObject IceOb;
     public SpriteRenderer spriteRenderer;
+
     void Awake()
     {
-            MainNetManager.instance.PlayerOb.Add(gameObject);
+        MainNetManager.instance.PlayerOb.Add(gameObject);
         if (PV.IsMine)
         {
-
             Nick.text = PhotonNetwork.NickName;
             KillBtn = MainNetManager.instance.KillBtn;
             iceBtn = MainNetManager.instance.iceBtn;
@@ -34,11 +34,10 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
         }
         else
         {
-
             Nick.text = PV.Owner.NickName;
         }
-        
-            spriteRenderer.material.SetColor("_PlayerColor", ColorSystem.instance.colors[PV.Owner.ActorNumber-1]);
+
+        spriteRenderer.material.SetColor("_PlayerColor", ColorSystem.instance.colors[PV.Owner.ActorNumber - 1]);
     }
 
 
@@ -53,6 +52,7 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
             }
         }
     }
+
     public void Normal_Colli()
     {
         useBtn.interactable = false;
@@ -64,6 +64,7 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
             }
         }
     }
+
     public void UseFunc()
     {
         for (int i = 0; i < friendly.Count; i++)
@@ -73,6 +74,7 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
                 friendly[i].GetComponent<MainPlayerInfo>().PV.RPC("IceBye", RpcTarget.All);
             }
         }
+
         useBtn.interactable = false;
     }
 
@@ -89,9 +91,7 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
                     friendly[i].GetComponent<MainPlayerInfo>().Killer_Colli();
                 }
             }
-           
         }
-
     }
 
     public void KillFunc()
@@ -105,24 +105,25 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
             }
         }
     }
+
     public void iceCheck()
     {
         bool b = true;
         for (int i = 0; i < MainNetManager.instance.PlayerOb.Count; i++)
         {
-            if (MainNetManager.instance.PlayerOb[i].GetComponent<MainPlayerInfo>().IsIce==false&& MainNetManager.instance.PlayerOb[i].GetComponent<MainPlayerInfo>().IsKiller==false)
+            if (MainNetManager.instance.PlayerOb[i].GetComponent<MainPlayerInfo>().IsIce == false &&
+                MainNetManager.instance.PlayerOb[i].GetComponent<MainPlayerInfo>().IsKiller == false)
             {
                 b = false;
             }
-            
         }
 
         if (b)
         {
             MainNetManager.instance.GameOver();
         }
-        
     }
+
     private void Update()
     {
         if (PV.IsMine)
@@ -135,19 +136,19 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
                 }
                 else
                 {
-                IceFunc();
-
+                    IceFunc();
                 }
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
                 if (!IsKiller)
                 {
-                   UseFunc();
+                    UseFunc();
                 }
             }
         }
     }
+
     private void OnDestroy()
     {
         MainNetManager.instance.PlayerOb.Remove(gameObject);
@@ -160,20 +161,20 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
         Nick.color = MainNetManager.instance.color[0];
         if (PV.IsMine)
         {
-
-        IsKiller = true;
+            IsKiller = true;
             MainNetManager.instance.NormalUI.SetActive(false);
             MainNetManager.instance.KillUI.SetActive(true);
         }
     }
+
     [PunRPC]
     void IceGo()
     {
         this.IceOb.SetActive(true);
         this.IsIce = true;
         iceCheck();
-
     }
+
     [PunRPC]
     void IceBye()
     {
@@ -181,6 +182,4 @@ public class MainPlayerInfo : MonoBehaviourPunCallbacks
         this.IsIce = false;
         iceBtn.interactable = true;
     }
-
-
 }

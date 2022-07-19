@@ -11,44 +11,44 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     public Animator ani;
     public SpriteRenderer sr;
     public float speed = 2;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private static readonly int IsMove = Animator.StringToHash("isMove");
 
-    // Update is called once per frame
     void Update()
     {
         if (PV.IsMine)
+            //본인만
         {
-
-        Vector3 dir = Vector3.ClampMagnitude(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f), 1f);
+            Vector3 dir =
+                Vector3.ClampMagnitude(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f), 1f);
+            //Input.GetAxis 를 이용해서 가로세로 움직임을 받습니다.
             if (dir.x < 0f)
             {
-                PV.RPC("FlipSet", RpcTarget.AllBuffered, true);
+                PV.RPC(nameof(RPC_FlipSet), RpcTarget.AllBuffered, true);
             }
-            else if(dir.x > 0f)
+            else if (dir.x > 0f)
             {
-
-                PV.RPC("FlipSet", RpcTarget.AllBuffered, false);
+                PV.RPC(nameof(RPC_FlipSet), RpcTarget.AllBuffered, false);
             }
-        transform.position += dir * speed * Time.deltaTime;
-            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") ==0)
+            //2d이기때문에 왼쪽 오른쪽 바라보게 해야합니다.
+            
+            
+            transform.position += dir * (speed * Time.deltaTime);
+            
+            
+            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
             {
-                ani.SetBool("isMove", false);
+                ani.SetBool(IsMove, false);
             }
             else
             {
-                ani.SetBool("isMove", true);
-
+                ani.SetBool(IsMove, true);
             }
+            //애니메이션 설정부분 
         }
     }
 
     [PunRPC]
-    void FlipSet(bool b)
+    void RPC_FlipSet(bool b)
     {
         sr.flipX = b;
     }

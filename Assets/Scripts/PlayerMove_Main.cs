@@ -14,6 +14,7 @@ public class PlayerMove_Main : MonoBehaviourPunCallbacks
     public GameObject _camera;
     public MainPlayerInfo playerInfo;
     public Rigidbody2D rd;
+    private static readonly int IsMove = Animator.StringToHash("isMove");
 
     // Start is called before the first frame update
     void Start()
@@ -29,27 +30,27 @@ public class PlayerMove_Main : MonoBehaviourPunCallbacks
         {
             if (playerInfo.IsIce)
             {
-                ani.SetBool("isMove", false);
+                ani.SetBool(IsMove, false);
                 return;
             }
-        Vector3 dir = Vector3.ClampMagnitude(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f), 1f);
+            Vector3 dir = Vector3.ClampMagnitude(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f), 1f);
             if (dir.x < 0f)
             {
-                PV.RPC("FlipSet", RpcTarget.AllBuffered, true);
+                PV.RPC(nameof(RPC_FlipSet), RpcTarget.AllBuffered, true);
             }
             else if(dir.x > 0f)
             {
 
-                PV.RPC("FlipSet", RpcTarget.AllBuffered, false);
+                PV.RPC(nameof(RPC_FlipSet), RpcTarget.AllBuffered, false);
             }
-        transform.position += dir * speed * Time.deltaTime;
+            transform.position += dir * (speed * Time.deltaTime);
             if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") ==0)
             {
-                ani.SetBool("isMove", false);
+                ani.SetBool(IsMove, false);
             }
             else
             {
-                ani.SetBool("isMove", true);
+                ani.SetBool(IsMove, true);
 
             }
             
@@ -60,7 +61,7 @@ public class PlayerMove_Main : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void FlipSet(bool b)
+    void RPC_FlipSet(bool b)
     {
         sr.flipX = b;
     }

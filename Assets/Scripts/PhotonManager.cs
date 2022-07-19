@@ -5,16 +5,14 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
     public static PhotonManager instance;
     public PhotonView PV;
 
 
-
     List<RoomInfo> myList = new List<RoomInfo>();
-
-
 
 
     public override void OnRoomListUpdate(List<Photon.Realtime.RoomInfo> roomList)
@@ -23,22 +21,30 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             Destroy(LobyManager.instance.RoomList[i]);
         }
+
         LobyManager.instance.RoomList.Clear();
+        
+        //Î∞©ÏùÑ Ï¥àÍ∏∞ÌôîÌï©ÎãàÎã§.
+        
         int roomCount = roomList.Count;
         for (int i = 0; i < roomCount; i++)
         {
             GameObject room = Instantiate(LobyManager.instance.RoomPrefab, LobyManager.instance.parent);
-            room.GetComponent<RoomInfo>().idx = i;
-            room.GetComponent<RoomInfo>().name = roomList[i].Name;
-            room.GetComponent<RoomInfo>().Roomname.text = roomList[i].Name;
-            room.GetComponent<RoomInfo>().PlayerCnt.text = roomList[i].PlayerCount.ToString()+" / "+roomList[i].MaxPlayers;
-            if (roomList[i].PlayerCount >= roomList[i].MaxPlayers || roomList[i].IsOpen==false)
+            var roomInfo = room.GetComponent<RoomInfo>();
+            roomInfo.idx = i;
+            roomInfo.name = roomList[i].Name;
+            roomInfo.Roomname.text = roomList[i].Name;
+            roomInfo.PlayerCnt.text =
+                roomList[i].PlayerCount.ToString() + " / " + roomList[i].MaxPlayers;
+            if (roomList[i].PlayerCount >= roomList[i].MaxPlayers || roomList[i].IsOpen == false)
             {
                 room.SetActive(false);
             }
+
             LobyManager.instance.RoomList.Add(room);
         }
     }
+
     public void RoomJoin(string name)
     {
         LobyManager.instance.Loading.SetActive(true);
@@ -46,13 +52,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
 
 
+    #region ÏÑúÎ≤ÑÏó∞Í≤∞
 
-    #region º≠πˆø¨∞·
     void Awake() => instance = this;
 
-    void Update()
-    {
-    }
 
     public void Connect()
     {
@@ -62,13 +65,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
-        if (LobyManager.instance.IsCreate==false)
+        if (LobyManager.instance.IsCreate == false)
         {
             LobyManager.instance.Online.SetActive(false);
             LobyManager.instance.SelectRoom.SetActive(true);
             LobyManager.instance.Loading.SetActive(false);
             PhotonNetwork.LocalPlayer.NickName = LobyManager.instance.NickName.text;
-            
         }
         else
         {
@@ -76,9 +78,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             LobyManager.instance.CreateRoom.SetActive(true);
             LobyManager.instance.Loading.SetActive(false);
             PhotonNetwork.LocalPlayer.NickName = LobyManager.instance.NickName.text;
-
         }
-
     }
 
     public override void OnJoinedLobby()
@@ -97,16 +97,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         LobyManager.instance.SelectRoom.SetActive(false);
         LobyManager.instance.Loading.SetActive(false);
     }
+
     #endregion
 
 
-    #region πÊ
+    #region Î∞©
+
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(LobyManager.instance.NickName.text, new RoomOptions { MaxPlayers = (byte)LobyManager.instance.MaxPlayer });
+        PhotonNetwork.CreateRoom(LobyManager.instance.NickName.text,
+            new RoomOptions { MaxPlayers = (byte)LobyManager.instance.MaxPlayer });
     }
 
-        public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
+    public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
 
     public void LeaveRoom() => PhotonNetwork.LeaveRoom();
 
@@ -123,13 +126,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
     }
 
-    public override void OnCreateRoomFailed(short returnCode, string message) { LobyManager.instance.NickName.text += Random.Range(0,100); CreateRoom(); }
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        LobyManager.instance.NickName.text += Random.Range(0, 100);
+        CreateRoom();
+    }
 
     //public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         LobyManager.instance.Loading.SetActive(false);
-
     }
 
     //public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -141,6 +147,4 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     //}
 
     #endregion
-
-
 }
